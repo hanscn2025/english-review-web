@@ -1,0 +1,8 @@
+.privacy-page { padding: 0 48rpx 64rpx; }
+.intro { color: var(--text); font-size: 28rpx; line-height: 44rpx; }
+.privacy-card { margin-top: 24rpx; padding: 0 28rpx; border: 1rpx solid var(--line); border-radius: 32rpx; }
+.privacy-card view { padding: 28rpx 0; border-bottom: 1rpx solid var(--line); display: flex; flex-direction: column; gap: 10rpx; }
+.privacy-card view:last-child { border-bottom: 0; }
+.privacy-card text:first-child { color: var(--ink); font-size: 28rpx; line-height: 40rpx; font-weight: 600; }
+.privacy-card text:last-child { color: var(--muted); font-size: 25rpx; line-height: 40rpx; }
+.privacy-note { margin-top: 24rpx; color: var(--subtle); font-size: 24rpx; line-height: 38rpx; }

@@ -1,4 +1,5 @@
 const speech = require("../../services/speech");
+const { userMessage } = require("../../utils/error");
 
 Page({
   data: {
@@ -51,7 +52,7 @@ Page({
       this.setData({ source: result.text.trim(), translation: "", status: "识别完成，正在翻译…" });
       await this.translate();
     } catch (error) {
-      this.setData({ error: error.message || "识别失败，请重试。", status: "" });
+      this.setData({ error: userMessage(error, "识别失败，请重试。"), status: "" });
     } finally {
       if (fileID) wx.cloud.deleteFile({ fileList: [fileID] }).catch(() => {});
       this.setData({ recognizing: false, working: false });
@@ -63,7 +64,7 @@ Page({
       const result = await wx.chooseMedia({ count: 1, mediaType: ["image"], sourceType: ["camera", "album"], sizeType: ["compressed"] });
       if (result.tempFiles && result.tempFiles[0]) await this.recognize(await this.prepareImage(result.tempFiles[0]));
     } catch (error) {
-      if (!/cancel/i.test(String(error && error.errMsg))) this.setData({ error: error.message || "无法读取图片，请检查相机或相册权限。" });
+      if (!/cancel/i.test(String(error && error.errMsg))) this.setData({ error: userMessage(error, "无法读取图片，请检查相机或相册权限。") });
     }
   },
   async translate() {
@@ -85,7 +86,7 @@ Page({
       const history = wx.getStorageSync("translationHistory") || [];
       wx.setStorageSync("translationHistory", [{ source, translation: String(text).trim(), sourceLanguage, targetLanguage, createdAt: Date.now() }, ...history].slice(0, 20));
     } catch (error) {
-      this.setData({ error: /TIME_LIMIT_EXCEEDED|timed out/i.test(String(error.message)) ? "翻译响应超时，请重试。" : (error.message || "翻译失败，请重试。"), status: "" });
+      this.setData({ error: userMessage(error, "翻译失败，请重试。"), status: "" });
     } finally {
       this.setData({ translating: false, working: false });
     }
@@ -94,10 +95,17 @@ Page({
     if (!text || this.data.speaking) return;
     this.setData({ speaking: true, error: "" });
     try { await speech.play(text, { onEnded: () => this.setData({ speaking: false }), onError: () => this.setData({ speaking: false, error: "播放失败，请重试。" }) }); }
-    catch (error) { this.setData({ speaking: false, error: error.message || "播放失败，请重试。" }); }
+    catch (error) { this.setData({ speaking: false, error: userMessage(error, "播放失败，请重试。") }); }
   },
   speakSource() { this.play(this.data.source); },
   speakTranslation() { this.play(this.data.translation); },
+  copyTranslation() {
+    if (!this.data.translation) return;
+    wx.setClipboardData({
+      data: this.data.translation,
+      success: () => wx.showToast({ title: "译文已复制", icon: "success" }),
+    });
+  },
   showHistory() {
     const history = wx.getStorageSync("translationHistory") || [];
     if (!history.length) return wx.showToast({ title: "还没有翻译记录", icon: "none" });

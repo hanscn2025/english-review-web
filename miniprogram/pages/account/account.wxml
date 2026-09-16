@@ -29,6 +29,7 @@
     <button bindtap="openReviews"><view class="menu-icon apricot"><image src="/assets/icons/history.svg" /></view><view class="menu-copy"><text>复习记录</text><text>查看已复习内容与自由复习</text></view><image class="menu-arrow" src="/assets/icons/chevron-right.svg" /></button>
     <button bindtap="openTranslate"><view class="menu-icon blue"><image src="/assets/icons/translate.svg" /></view><view class="menu-copy"><text>在线翻译</text><text>文字与拍照识别翻译</text></view><image class="menu-arrow" src="/assets/icons/chevron-right.svg" /></button>
     <button bindtap="showDataInfo"><view class="menu-icon neutral"><image src="/assets/icons/settings.svg" /></view><view class="menu-copy"><text>账号与数据</text><text>了解云端同步和账号隔离</text></view><image class="menu-arrow" src="/assets/icons/chevron-right.svg" /></button>
+    <button bindtap="openPrivacy"><view class="menu-icon neutral"><image src="/assets/icons/settings.svg" /></view><view class="menu-copy"><text>隐私与服务说明</text><text>了解图片、文字和语音如何处理</text></view><image class="menu-arrow" src="/assets/icons/chevron-right.svg" /></button>
   </view>
 
   <view class="service-note"><text>复习间隔</text><text>1 · 3 · 7 · 14 · 30 天</text></view>

@@ -9,7 +9,7 @@ function decorate(entry, books = []) {
 }
 
 Page({
-  data: { queue: [], current: null, index: 0, revealed: false, submitting: false, speaking: false, speechError: "" },
+  data: { queue: [], current: null, index: 0, revealed: false, submitting: false, speaking: false, speechError: "", rememberedCount: 0, forgottenCount: 0 },
   async onLoad(options = {}) {
     const practice = options.practice === "1";
     const [allEntries, books] = await Promise.all([store.list("entries", "updatedAt"), store.list("books", "createdAt")]);
@@ -27,11 +27,13 @@ Page({
     this.setData({ submitting: true });
     try {
       if (!this.data.practice) await store.submitReview(this.data.current, rating);
+      const rememberedCount = this.data.rememberedCount + (rating === "remembered" ? 1 : 0);
+      const forgottenCount = this.data.forgottenCount + (rating === "again" ? 1 : 0);
       const nextIndex = this.data.index + 1;
       if (nextIndex >= this.data.queue.length) {
         if (!this.data.practice) await store.completeCheckIn(this.data.queue.length);
         return wx.reLaunch({
-          url: `/pages/complete/complete?count=${this.data.queue.length}`,
+          url: `/pages/complete/complete?count=${this.data.queue.length}&remembered=${rememberedCount}&forgotten=${forgottenCount}`,
           fail: () => {
             this.setData({ submitting: false });
             wx.showToast({ title: "进入完成页失败，请重试", icon: "none" });
@@ -39,7 +41,7 @@ Page({
         });
       }
       const current = this.data.queue[nextIndex];
-      this.setData({ index: nextIndex, current, rememberDays: INTERVAL_DAYS[current.stage || 0], revealed: false, submitting: false });
+      this.setData({ index: nextIndex, current, rememberDays: INTERVAL_DAYS[current.stage || 0], revealed: false, submitting: false, rememberedCount, forgottenCount });
     } catch (error) {
       this.setData({ submitting: false });
       wx.showModal({ title: "提交失败", content: "当前卡片已保留，请检查网络后重试。", showCancel: false });

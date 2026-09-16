@@ -5,6 +5,7 @@ const crypto = require("crypto");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const app = cloudbase.init({});
 const db = app.database();
+const API_VERSION = "2026.09.16.1";
 const ALLOWED_COLLECTIONS = new Set(["books", "entries", "review_logs", "daily_checkins"]);
 const collectionTasks = new Map();
 
@@ -44,6 +45,10 @@ function publicAccount(record) {
   return { accountId: record.accountId, nickname: record.nickname, createdAt: record.createdAt };
 }
 
+function success(data) {
+  return { ok: true, apiVersion: API_VERSION, data };
+}
+
 exports.main = async (event) => {
   try {
     const { OPENID } = cloud.getWXContext();
@@ -53,8 +58,8 @@ exports.main = async (event) => {
       await ensureCollection("users");
       const users = db.collection("users");
       const existing = await users.where({ ownerId: OPENID }).limit(1).get();
-      if (existing.data.length) return { ok: true, data: publicAccount(existing.data[0]) };
-      if (event.action === "getAccount") return { ok: true, data: null };
+      if (existing.data.length) return success(publicAccount(existing.data[0]));
+      if (event.action === "getAccount") return success(null);
       const now = new Date();
       const record = {
         ownerId: OPENID,
@@ -64,7 +69,7 @@ exports.main = async (event) => {
         updatedAt: now,
       };
       await users.add(record);
-      return { ok: true, data: publicAccount(record) };
+      return success(publicAccount(record));
     }
 
     const name = collectionName(event.collection);
@@ -76,13 +81,13 @@ exports.main = async (event) => {
       let query = collection.where({ ownerId: OPENID });
       if (event.orderField) query = query.orderBy(event.orderField, "desc");
       const result = await query.limit(100).get();
-      return { ok: true, data: result.data };
+      return success(result.data);
     }
 
     if (event.action === "add") {
       const record = { ...cleanValue(event.value), ownerId: OPENID, createdAt: now, updatedAt: now };
       const result = await collection.add(record);
-      return { ok: true, data: { ...record, _id: result.id } };
+      return success({ ...record, _id: result.id });
     }
 
     if (event.action === "update" || event.action === "remove") {
@@ -94,12 +99,12 @@ exports.main = async (event) => {
       } else {
         await collection.doc(event.id).remove();
       }
-      return { ok: true };
+      return success(null);
     }
 
     throw new Error("不支持的操作");
   } catch (error) {
     console.error("daywordApi", error);
-    return { ok: false, message: error.message || "云端请求失败" };
+    return { ok: false, apiVersion: API_VERSION, message: error.message || "云端请求失败" };
   }
 };

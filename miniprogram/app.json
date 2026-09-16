@@ -8,6 +8,7 @@
     "pages/review/review",
     "pages/review-history/review-history",
     "pages/complete/complete",
+    "pages/privacy/privacy",
     "pages/account/account"
   ],
   "window": {

@@ -1,0 +1,11 @@
+<view class="page privacy-page">
+  <view class="mini-topbar"><view class="bar-side"><button bindtap="goBack" aria-label="返回"><image src="/assets/icons/back.svg" /></button></view><view class="bar-title">隐私与服务说明</view><view class="bar-side"></view></view>
+  <view class="intro">Dayword 仅处理完成词书、翻译、发音和复习所需的数据。</view>
+  <view class="privacy-card">
+    <view><text>账号与学习数据</text><text>微信云开发会识别当前微信用户。词书、条目、复习记录和打卡数据按用户隔离存储。</text></view>
+    <view><text>拍照识别</text><text>选择的图片会上传到腾讯云用于文字识别；识别请求完成后，小程序会删除本次临时云文件。</text></view>
+    <view><text>在线翻译</text><text>输入或识别出的文字会发送给腾讯云开发 AI 服务，仅用于生成本次翻译结果。</text></view>
+    <view><text>英语朗读</text><text>需要朗读的文字会发送给腾讯云语音合成服务，并缓存生成的音频以减少重复调用。</text></view>
+  </view>
+  <view class="privacy-note">测试版暂不提供账号切换。更换微信账号后，系统会使用对应微信身份访问独立数据。</view>
+</view>

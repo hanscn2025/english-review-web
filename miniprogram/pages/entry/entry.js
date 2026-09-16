@@ -5,7 +5,7 @@ Page({
   data: {
     id: "", books: [], bookNames: [], bookIndex: 0, types: ["单词", "词组", "句子"], typeValues: ["word", "phrase", "sentence"], typeIndex: 0,
     english: "", meaning: "", ipa: "", exampleEn: "", exampleZh: "", saving: false, completing: false, speaking: false, recording: false, recognizing: false,
-    englishDirty: false, completeError: "", speechError: "", bookPickerOpen: false, pendingBookIndex: 0, addingBook: false, newBookName: "",
+    englishDirty: false, completeError: "", speechError: "", bookPickerOpen: false, pendingBookIndex: 0, addingBook: false, newBookName: "", showAdvanced: false,
   },
   async onLoad(options) {
     try {
@@ -21,7 +21,7 @@ Page({
         id: options.id || "", books: availableBooks, bookNames: availableBooks.map((book) => book.name), bookIndex, typeIndex,
         english: entry ? entry.english : decodeURIComponent(options.english || ""), meaning: entry ? entry.meaning : decodeURIComponent(options.meaning || ""), ipa: entry ? entry.ipa || "" : "",
         exampleEn: entry ? entry.exampleEn || "" : "", exampleZh: entry ? entry.exampleZh || "" : "",
-        englishDirty: false, completeError: "",
+        englishDirty: false, completeError: "", showAdvanced: Boolean(entry && (entry.ipa || entry.exampleEn || entry.exampleZh)),
       });
       if (entry) wx.setNavigationBarTitle({ title: "编辑内容" });
     } catch (error) {
@@ -52,6 +52,7 @@ Page({
   inputNewBookName(event) { this.setData({ newBookName: event.detail.value }); },
   pickType(event) { this.setData({ typeIndex: Number(event.detail.value) }); },
   selectType(event) { this.setData({ typeIndex: Number(event.currentTarget.dataset.index) }); },
+  toggleAdvanced() { this.setData({ showAdvanced: !this.data.showAdvanced }); },
   enrichWithAI(text, includeIpa = false) {
     if (!wx.cloud.extend || !wx.cloud.extend.AI) return Promise.reject(new Error("当前微信版本不支持云开发 AI，请升级微信后重试"));
     const model = wx.cloud.extend.AI.createModel("cloudbase");

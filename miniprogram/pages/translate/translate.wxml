@@ -6,7 +6,7 @@
     <picker mode="selector" range="{{languages}}" value="{{targetIndex}}" bindchange="chooseTarget"><view class="language-choice target"><text>{{languages[targetIndex]}}</text><image src="/assets/icons/chevron-right.svg" /></view></picker>
   </view>
   <view class="translate-box">
-    <textarea class="source" auto-height value="{{source}}" bindinput="inputSource" placeholder="输入要翻译的内容" maxlength="1000" focus />
+    <textarea class="source" value="{{source}}" bindinput="inputSource" placeholder="输入要翻译的内容" maxlength="1000" focus />
     <view class="input-tools {{source ? 'has-source' : ''}}">
       <button class="tool" bindtap="scanImage" disabled="{{working}}"><image class="tool-icon" src="/assets/icons/camera.svg" /><text>拍照</text></button>
       <button wx:if="{{source}}" class="speaker-tool" bindtap="speakSource" disabled="{{speaking}}"><image src="/assets/icons/volume-muted.svg" /><text>朗读</text></button>
@@ -18,7 +18,7 @@
   <view class="error" wx:if="{{error}}">{{error}}</view>
   <button class="primary translate-button" bindtap="translate" loading="{{translating}}" disabled="{{!source || working}}">翻译</button>
   <view class="result-card" wx:if="{{translation}}">
-    <view class="result-head"><text>翻译结果</text><button bindtap="speakTranslation"><image src="/assets/icons/volume-muted.svg" /></button></view>
+    <view class="result-head"><text>翻译结果</text><view class="result-actions"><button bindtap="copyTranslation">复制</button><button class="result-speaker" bindtap="speakTranslation" aria-label="朗读译文"><image src="/assets/icons/volume-muted.svg" /></button></view></view>
     <view class="translation">{{translation}}</view>
     <button class="save-entry" bindtap="saveToBook"><image src="/assets/icons/plus.svg" />收录到词书</button>
   </view>

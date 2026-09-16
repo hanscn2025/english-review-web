@@ -1,6 +1,8 @@
 const { scheduleReview, dateKey } = require("../utils/review");
+const { userMessage } = require("../utils/error");
 
 const COLLECTIONS = { books: "books", entries: "entries", logs: "review_logs", checkIns: "daily_checkins" };
+const API_VERSION = "2026.09.16.1";
 
 function cloudAvailable() {
   const app = getApp();
@@ -9,10 +11,15 @@ function cloudAvailable() {
 
 async function callApi(action, payload) {
   if (!cloudAvailable()) throw new Error("云开发尚未初始化");
-  const response = await wx.cloud.callFunction({ name: "daywordApi", data: { action, ...payload } });
-  const result = response.result || {};
-  if (!result.ok) throw new Error(result.message || "云端请求失败");
-  return result;
+  try {
+    const response = await wx.cloud.callFunction({ name: "daywordApi", data: { action, ...payload } });
+    const result = response.result || {};
+    if (result.apiVersion !== API_VERSION) throw new Error("apiVersion mismatch");
+    if (!result.ok) throw new Error(result.message || "云端请求失败");
+    return result;
+  } catch (error) {
+    throw new Error(userMessage(error, "云端数据加载失败，请稍后重试。"));
+  }
 }
 
 async function list(collection, orderField) {

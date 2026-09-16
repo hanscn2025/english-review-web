@@ -2,6 +2,12 @@
   <view class="done"><image src="/assets/icons/check.svg" /></view>
   <view class="eyebrow">今日已打卡</view>
   <view class="title">复习完成</view>
-  <view class="summary"><text>本次完成</text><text>{{count}} 条内容</text></view>
+  <view class="summary-grid">
+    <view><text>{{count}}</text><text>本次完成</text></view>
+    <view><text>{{remembered}}</text><text>记得</text></view>
+    <view><text>{{forgotten}}</text><text>需巩固</text></view>
+  </view>
+  <view class="next-review"><text>下次复习</text><text>{{nextReview}}</text></view>
   <button class="primary" bindtap="backToday">返回今日</button>
+  <button class="history-button" bindtap="reviewHistory">查看复习记录</button>
 </view>

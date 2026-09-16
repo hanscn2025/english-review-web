@@ -22,7 +22,11 @@
 .field-message.error { color: #b54732; }
 .retry-message { width: 100%; padding: 0; background: transparent; text-align: left; }
 .retry-message::after { border: 0; }
-.save { width: 100% !important; min-width: 0; max-width: none; margin: 48rpx 0 0; border-radius: 24rpx; }
+.advanced-toggle { width: 100%; min-height: 88rpx; margin-top: 28rpx; padding: 0; border-top: 1rpx solid var(--line); border-bottom: 1rpx solid var(--line); border-radius: 0; background: transparent; color: var(--text); font-size: 27rpx; display: flex; align-items: center; justify-content: space-between; }
+.advanced-toggle text:last-child { color: var(--blue); font-size: 25rpx; }
+.save-space { height: 152rpx; }
+.save-dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; padding: 20rpx 48rpx calc(20rpx + env(safe-area-inset-bottom)); border-top: 1rpx solid var(--line); background: rgba(255,255,255,.96); }
+.save { width: 100% !important; min-width: 0; max-width: none; border-radius: 24rpx; }
 .sheet-mask { position: fixed; inset: 0; z-index: 20; background: rgba(19,32,51,.42); }
 .book-sheet { position: fixed; left: 20rpx; right: 20rpx; bottom: 0; z-index: 21; padding-bottom: env(safe-area-inset-bottom); border-radius: 32rpx 32rpx 0 0; background: #fff; overflow: hidden; }
 .sheet-bar { height: 104rpx; padding: 0 28rpx; border-bottom: 1rpx solid #e8edf3; display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; }

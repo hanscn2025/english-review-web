@@ -15,11 +15,16 @@
   </view>
   <view class="field"><text class="field-label">中文意思</text><textarea class="textarea meaning" auto-height placeholder="输入英文后自动完善，也可以手动修改" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3;line-height:1.5" value="{{meaning}}" data-field="meaning" bindinput="field" maxlength="500" /></view>
   <view class="field"><text class="field-label">所属词书</text><button class="picker picker-button" bindtap="openBookPicker"><text>{{bookNames[bookIndex] || '请选择词书'}}</text><image class="row-icon" src="/assets/icons/chevron-right.svg" /></button></view>
-  <view class="field" wx:if="{{typeValues[typeIndex] !== 'sentence'}}"><text class="field-label">音标（选填）</text><input class="input" placeholder="例如 /ˈklerəfaɪ/" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3" value="{{ipa}}" data-field="ipa" bindinput="field" /></view>
-  <view class="field"><text class="field-label">英语例句（选填）</text><textarea class="textarea example" auto-height placeholder="保留遇见它时的真实语境" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3;line-height:1.5" value="{{exampleEn}}" data-field="exampleEn" bindinput="field" bindblur="completeExample" maxlength="500" /></view>
-  <view class="field"><text class="field-label">例句翻译（选填）</text><textarea class="textarea example" auto-height placeholder="例句的中文意思" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3;line-height:1.5" value="{{exampleZh}}" data-field="exampleZh" bindinput="field" maxlength="500" /></view>
-  <button class="primary save" bindtap="save" loading="{{saving}}" disabled="{{saving}}">保存到词书</button>
+  <button class="advanced-toggle" bindtap="toggleAdvanced"><text>补充信息（选填）</text><text>{{showAdvanced ? '收起' : '展开'}}</text></button>
+  <view wx:if="{{showAdvanced}}" class="advanced-fields">
+    <view class="field" wx:if="{{typeValues[typeIndex] !== 'sentence'}}"><text class="field-label">音标</text><input class="input" placeholder="例如 /ˈklerəfaɪ/" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3" value="{{ipa}}" data-field="ipa" bindinput="field" /></view>
+    <view class="field"><text class="field-label">英语例句</text><textarea class="textarea example" auto-height placeholder="保留遇见它时的真实语境" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3;line-height:1.5" value="{{exampleEn}}" data-field="exampleEn" bindinput="field" bindblur="completeExample" maxlength="500" /></view>
+    <view class="field"><text class="field-label">例句翻译</text><textarea class="textarea example" auto-height placeholder="例句的中文意思" placeholder-style="font-size:28rpx;font-weight:400;color:#8a94a3;line-height:1.5" value="{{exampleZh}}" data-field="exampleZh" bindinput="field" maxlength="500" /></view>
+  </view>
+  <view class="save-space"></view>
 </view>
+
+<view class="save-dock"><button class="primary save" bindtap="save" loading="{{saving}}" disabled="{{saving}}">保存到词书</button></view>
 
 <view wx:if="{{bookPickerOpen}}" class="sheet-mask" bindtap="closeBookPicker"></view>
 <view wx:if="{{bookPickerOpen}}" class="book-sheet">
