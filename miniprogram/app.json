@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/today/today",
+    "pages/books/books",
+    "pages/book-detail/book-detail",
+    "pages/entry/entry",
+    "pages/translate/translate",
+    "pages/review/review",
+    "pages/review-history/review-history",
+    "pages/complete/complete",
+    "pages/account/account"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Dayword",
+    "backgroundColor": "#f7f8fa",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#667085",
+    "selectedColor": "#2563eb",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/today/today", "text": "今日", "iconPath": "assets/icons/tab-home.png", "selectedIconPath": "assets/icons/tab-home-active.png" },
+      { "pagePath": "pages/translate/translate", "text": "翻译", "iconPath": "assets/icons/tab-translate.png", "selectedIconPath": "assets/icons/tab-translate-active.png" },
+      { "pagePath": "pages/books/books", "text": "词书", "iconPath": "assets/icons/tab-books.png", "selectedIconPath": "assets/icons/tab-books-active.png" },
+      { "pagePath": "pages/account/account", "text": "我的", "iconPath": "assets/icons/tab-account.png", "selectedIconPath": "assets/icons/tab-account-active.png" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

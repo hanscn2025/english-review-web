@@ -1,0 +1,12 @@
+<view class="page">
+  <view class="mini-topbar"><view class="bar-side"><button bindtap="goBack" aria-label="返回"><image src="/assets/icons/back.svg" /></button></view><view class="bar-title">{{book.name || '词书'}}</view><view class="bar-side right"></view></view>
+  <view class="search-wrap"><image src="/assets/icons/search.svg" /><input class="search" placeholder="搜索英文或中文" value="{{query}}" bindinput="search" /></view>
+  <view class="list-tools"><view class="list-count">共 {{entries.length}} 条</view><button bindtap="addEntry"><image src="/assets/icons/plus.svg" /><text>添加内容</text></button></view>
+  <view class="entry-list" wx:if="{{entries.length}}">
+    <view wx:for="{{entries}}" wx:key="_id" class="entry-row">
+      <view class="entry-main" data-id="{{item._id}}" bindtap="editEntry"><text>{{item.english}}</text><text>{{item.ipa}}</text><text>{{item.meaning}}</text></view>
+      <button class="delete" data-id="{{item._id}}" bindtap="deleteEntry"><image src="/assets/icons/close.svg" /></button>
+    </view>
+  </view>
+  <view class="empty" wx:else>这本词书还没有内容。</view>
+</view>

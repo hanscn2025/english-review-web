@@ -1,0 +1,12 @@
+<view class="page books-page">
+  <view class="mini-topbar"><view class="bar-side"></view><view class="bar-title">词书</view><view class="bar-side right"></view></view>
+  <button wx:if="{{!adding}}" class="create-action" bindtap="showAdd"><image src="/assets/icons/plus.svg" /><text>新建词书</text></button>
+  <view wx:if="{{adding}}" class="inline-form"><input class="input" placeholder="词书名称" value="{{name}}" bindinput="inputName" focus /><button bindtap="addBook">创建</button></view>
+  <view class="books" wx:if="{{books.length}}">
+    <button wx:for="{{books}}" wx:key="_id" class="book" data-id="{{item._id}}" bindtap="openBook">
+      <view class="book-cover cover-{{index % 3}}"><image src="/assets/icons/book.svg" /></view><view class="copy"><text>{{item.name}}</text><text>{{item.count}} 条 · {{item.due}} 条待复习</text></view><image class="row-icon" src="/assets/icons/chevron-right.svg" />
+    </button>
+  </view>
+  <view class="empty" wx:else>新建一本词书，开始收集自己的英语。</view>
+  <view class="quiet-tip">同一词书内会忽略大小写检查重复内容。</view>
+</view>

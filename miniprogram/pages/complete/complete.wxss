@@ -1,0 +1,7 @@
+.complete { padding: 260rpx 48rpx calc(64rpx + env(safe-area-inset-bottom)); text-align: center; display: flex; flex-direction: column; align-items: center; }
+.done { width: 128rpx; height: 128rpx; margin: 0 auto 40rpx; border-radius: 64rpx; background: var(--blue-soft); color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 64rpx; font-weight: 700; }
+.done image { width: 54rpx; height: 54rpx; }
+.complete .title { margin-top: 12rpx; font-size: 56rpx; }
+.summary { width: 100%; min-height: 128rpx; box-sizing: border-box; margin: 64rpx 0 28rpx; padding: 0 32rpx; border: 1rpx solid var(--line); border-radius: 28rpx; background: var(--surface); display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 26rpx; line-height: 38rpx; }
+.summary text:last-child { color: #0967e8; font-weight: 700; }
+.complete button { width: 100%; }

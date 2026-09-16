@@ -1,0 +1,18 @@
+{
+  "books": {
+    ".read": "doc._openid == auth.openid",
+    ".write": "doc._openid == auth.openid"
+  },
+  "entries": {
+    ".read": "doc._openid == auth.openid",
+    ".write": "doc._openid == auth.openid"
+  },
+  "review_logs": {
+    ".read": "doc._openid == auth.openid",
+    ".write": "doc._openid == auth.openid"
+  },
+  "daily_checkins": {
+    ".read": "doc._openid == auth.openid",
+    ".write": "doc._openid == auth.openid"
+  }
+}

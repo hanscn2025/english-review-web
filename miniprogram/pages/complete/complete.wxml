@@ -1,0 +1,7 @@
+<view class="page complete">
+  <view class="done"><image src="/assets/icons/check.svg" /></view>
+  <view class="eyebrow">今日已打卡</view>
+  <view class="title">复习完成</view>
+  <view class="summary"><text>本次完成</text><text>{{count}} 条内容</text></view>
+  <button class="primary" bindtap="backToday">返回今日</button>
+</view>

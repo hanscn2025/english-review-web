@@ -1,0 +1,17 @@
+.top { min-height: 116rpx; display: flex; align-items: center; justify-content: space-between; }
+.top .title { margin: 0; font-size: 34rpx; }
+.add { width: 104rpx; height: 104rpx; padding: 0; border-radius: 52rpx; background: transparent; color: #111827; font-size: 46rpx; display: flex; align-items: center; justify-content: center; }
+.search-wrap { height: 96rpx; margin-top: 16rpx; padding: 0 28rpx; border: 1rpx solid var(--line); border-radius: 24rpx; background: var(--surface); color: var(--subtle); display: flex; align-items: center; gap: 16rpx; }
+.search { flex: 1; height: 100%; }
+.search-wrap image { width: 30rpx; height: 30rpx; }
+.list-tools { min-height: 96rpx; display: flex; align-items: center; justify-content: space-between; }
+.list-count { color: var(--subtle); font-size: 24rpx; }
+.list-tools button { height: 72rpx; padding: 0 18rpx; background: transparent; color: var(--blue); font-size: 25rpx; line-height: 36rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8rpx; }
+.list-tools button image { width: 26rpx; height: 26rpx; }
+.entry-row { min-height: 176rpx; padding: 24rpx 0; border-bottom: 1rpx solid var(--line); display: flex; align-items: center; }
+.entry-main { flex: 1; display: flex; flex-direction: column; }
+.entry-main text:first-child { color: var(--ink); font-size: 32rpx; line-height: 44rpx; font-weight: 600; }
+.entry-main text:nth-child(2) { margin-top: 4rpx; color: var(--subtle); font-size: 24rpx; line-height: 34rpx; }
+.entry-main text:nth-child(3) { margin-top: 6rpx; color: var(--text); font-size: 27rpx; line-height: 38rpx; }
+.delete { width: 88rpx; height: 88rpx; margin: 0; padding: 0; background: transparent; color: #d92d20; font-size: 34rpx; }
+.delete image { width: 28rpx; height: 28rpx; opacity: .72; }

@@ -1,0 +1,41 @@
+<view class="page today">
+  <view class="safe-top"></view>
+  <view class="today-heading">
+    <view><view class="eyebrow">{{todayLabel}}</view><view class="title">今天，继续一点点。</view></view>
+    <view class="streak-badge">{{streakCount}}</view>
+  </view>
+
+  <view class="cloud-warning" wx:if="{{cloudError}}">{{cloudError}}</view>
+
+  <view class="review-panel">
+    <view class="review-main">
+    <view>
+      <view class="panel-label">今日复习</view>
+      <view class="review-count"><text>{{dueCount}}</text> 个待复习</view>
+      <view class="muted">{{dueCount ? '大约 2 分钟完成' : '今天的内容已经处理完了'}}</view>
+    </view>
+    <button class="start" bindtap="startReview" disabled="{{!dueCount}}"><image src="/assets/icons/arrow-right-blue.svg" /></button>
+    </view>
+    <view class="review-links"><button bindtap="openReviewHistory">复习回顾</button><view></view><button bindtap="openFreeReview">自由复习</button></view>
+  </view>
+
+  <view class="action-grid">
+    <button class="home-action add-action" bindtap="addEntry"><view class="home-action-icon plus-icon"><image src="/assets/icons/plus.svg" /></view><view class="home-action-copy"><text>快速添加</text><text>收录英语内容</text></view></button>
+    <button class="home-action translate-action" bindtap="openTranslate"><view class="home-action-icon"><image src="/assets/icons/translate.svg" /></view><view class="home-action-copy"><text>在线翻译</text><text>文字 · 语音 · 拍照</text></view></button>
+  </view>
+
+  <view class="section-head"><text class="section-title">近七日打卡</text><text class="section-link">{{streakCount}} 天</text></view>
+  <view class="check-strip">
+    <view wx:for="{{checkDays}}" wx:key="key" class="check-day {{item.checked ? 'checked' : ''}}">
+      <text>{{item.label}}</text><text>{{item.day}}</text><image wx:if="{{item.checked}}" class="dot" src="/assets/icons/check.svg" />
+    </view>
+  </view>
+
+  <view class="section-head"><text class="section-title">我的词书</text><text class="section-link" bindtap="openBooks">全部</text></view>
+  <view class="book-list" wx:if="{{books.length}}">
+    <button wx:for="{{books}}" wx:key="_id" class="book-row" data-id="{{item._id}}" bindtap="openBook">
+      <view class="book-icon"><image src="/assets/icons/book.svg" /></view><view class="book-copy"><text>{{item.name}}</text><text>{{item.count}} 条内容</text></view><image class="row-icon" src="/assets/icons/chevron-right.svg" />
+    </button>
+  </view>
+  <view class="empty" wx:else>还没有词书，先添加一条英语内容吧。</view>
+</view>

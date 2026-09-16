@@ -1,0 +1,10 @@
+{
+  "name": "dayword-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "@cloudbase/node-sdk": "latest",
+    "wx-server-sdk": "latest"
+  }
+}

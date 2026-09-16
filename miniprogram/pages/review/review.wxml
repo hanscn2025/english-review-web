@@ -1,0 +1,38 @@
+<view class="page review" wx:if="{{current}}">
+  <view class="mini-topbar review-nav"><view class="bar-side"><button bindtap="goBack" aria-label="退出复习"><image src="/assets/icons/close.svg" /></button></view><view class="bar-title">{{practice ? '自由复习' : (current.bookName || '我的词书')}}</view><view class="bar-side right">{{index + 1}} / {{queue.length}}</view></view>
+  <view class="progress"><view style="width: {{((index + 1) / queue.length) * 100}}%"></view></view>
+  <view wx:if="{{!revealed}}" class="question-stage">
+    <view class="question-card">
+      <view class="card-meta"><text>{{current.typeLabel}}</text><text>还剩 {{queue.length - index}} 个</text></view>
+      <view class="prompt">先回想它的中文意思</view>
+      <view class="word-line">
+        <view class="english">{{current.english}}</view>
+        <button class="inline-speaker" aria-label="朗读 {{current.english}}" data-text="{{current.english}}" bindtap="speak" disabled="{{speaking}}"><image src="/assets/icons/volume-up.svg" /></button>
+      </view>
+      <view class="question-ipa" wx:if="{{current.ipa}}">{{current.ipa}}</view>
+      <view class="context" wx:if="{{current.exampleEn}}"><text>语境</text><view>{{current.exampleEn}}</view><button aria-label="朗读例句" data-text="{{current.exampleEn}}" bindtap="speak"><image src="/assets/icons/volume-up.svg" /></button></view>
+      <view class="book-note">来自「{{current.bookName}}」</view>
+    </view>
+    <view wx:if="{{speechError}}" class="speech-error">{{speechError}}</view>
+    <view class="question-actions">
+      <view class="action-hint">先在心里说出意思，再选择</view>
+      <view class="quick-ratings">
+        <button class="review-choice reveal" bindtap="reveal">查看答案</button>
+        <button class="review-choice know-next" bindtap="rememberAndNext" loading="{{submitting}}">下一个</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="answer">
+    <view class="divider"></view>
+    <view class="answer-heading"><view class="answer-word"><text>{{current.english}}</text><button aria-label="朗读 {{current.english}}" data-text="{{current.english}}" bindtap="speak"><image src="/assets/icons/volume-up.svg" /></button></view><text>{{current.typeLabel}}</text></view>
+    <view class="ipa-row"><text>{{current.ipa || '暂无音标'}}</text></view>
+    <view class="meaning">{{current.meaning}}</view>
+    <view class="example-zh" wx:if="{{current.exampleZh}}"><text>例句翻译</text><view>{{current.exampleZh}}</view></view>
+    <view class="ratings">
+      <button class="secondary" data-rating="again" bindtap="rate" loading="{{submitting}}">忘了 · 1 分钟</button>
+      <button class="primary" data-rating="remembered" bindtap="rate" loading="{{submitting}}">记得 · {{rememberDays}} 天</button>
+    </view>
+    <view class="action-note">选择后自动进入下一条</view>
+  </view>
+</view>

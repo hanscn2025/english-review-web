@@ -1,0 +1,29 @@
+.account { padding: 0 48rpx 64rpx; }
+.profile-card { min-height: 136rpx; box-sizing: border-box; padding: 24rpx; border: 1rpx solid var(--line); border-radius: 32rpx; display: flex; gap: 20rpx; align-items: center; }
+.avatar { flex: 0 0 auto; width: 88rpx; height: 88rpx; border-radius: 44rpx; background: var(--blue); color: #fff; font-size: 26rpx; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.profile-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4rpx; text-align: left; }
+.profile-copy text:first-child { overflow: hidden; color: var(--ink); font-size: 30rpx; line-height: 42rpx; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.profile-copy text:last-child { overflow: hidden; color: var(--muted); font-size: 22rpx; line-height: 32rpx; text-overflow: ellipsis; white-space: nowrap; }
+.login-button { flex: 0 0 auto; min-width: 144rpx; height: 72rpx; padding: 0 20rpx; border-radius: 20rpx; background: var(--blue); color: #fff; font-size: 24rpx; line-height: 34rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.signed-badge { flex: 0 0 auto; padding: 10rpx 18rpx; border-radius: 999rpx; background: var(--blue-soft); color: var(--blue); font-size: 22rpx; line-height: 30rpx; font-weight: 600; }
+.account-error { margin-top: 16rpx; color: #b54732; font-size: 24rpx; line-height: 36rpx; }
+.stats { margin-top: 24rpx; padding: 28rpx 0; border: 1rpx solid var(--line); border-radius: 32rpx; display: grid; grid-template-columns: repeat(3, 1fr); }
+.stats view { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4rpx; }
+.stats view + view { border-left: 1rpx solid var(--line); }
+.stats text:first-child { color: var(--ink); font-size: 38rpx; line-height: 46rpx; font-weight: 700; }
+.stats text:last-child { color: var(--muted); font-size: 22rpx; line-height: 32rpx; }
+.section-label { margin: 40rpx 0 16rpx; color: var(--ink); font-size: 30rpx; line-height: 42rpx; font-weight: 700; }
+.menu-card { border: 1rpx solid var(--line); border-radius: 32rpx; overflow: hidden; }
+.menu-card button { width: 100%; min-height: 116rpx; padding: 18rpx 22rpx; background: #fff; display: flex; align-items: center; gap: 18rpx; text-align: left; }
+.menu-card button + button { border-top: 1rpx solid var(--line); }
+.menu-card button:active { background: var(--surface); }
+.menu-icon { flex: 0 0 auto; width: 72rpx; height: 72rpx; border-radius: 20rpx; display: flex; align-items: center; justify-content: center; }
+.menu-icon.blue { background: var(--blue-soft); }
+.menu-icon.apricot { background: var(--apricot); }
+.menu-icon.neutral { background: var(--surface); }
+.menu-icon image { width: 34rpx; height: 34rpx; }
+.menu-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3rpx; }
+.menu-copy text:first-child { color: var(--ink); font-size: 28rpx; line-height: 40rpx; font-weight: 600; }
+.menu-copy text:last-child { overflow: hidden; color: var(--muted); font-size: 22rpx; line-height: 32rpx; text-overflow: ellipsis; white-space: nowrap; }
+.menu-arrow { flex: 0 0 auto; width: 28rpx; height: 28rpx; }
+.service-note { margin: 24rpx 4rpx 0; display: flex; justify-content: space-between; color: var(--subtle); font-size: 22rpx; line-height: 32rpx; }
