@@ -11,3 +11,6 @@
 .result.again { background: var(--apricot); color: #b45309; }
 .review-all { width: 100% !important; margin-bottom: 28rpx; }
 .review-one { flex: 0 0 144rpx; width: 144rpx !important; height: 72rpx; padding: 0 20rpx; border-radius: 18rpx; background: var(--blue-soft); color: var(--blue); font-size: 25rpx; line-height: 36rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.page-state { min-height: 320rpx; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 26rpx; line-height: 38rpx; text-align: center; }
+.error-state { flex-direction: column; gap: 28rpx; }
+.error-state button { width: 200rpx !important; height: 72rpx; padding: 0; border-radius: 18rpx; background: var(--blue-soft); color: var(--blue); font-size: 25rpx; line-height: 72rpx; font-weight: 600; }

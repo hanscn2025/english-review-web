@@ -39,8 +39,14 @@ Page({
     }
   },
   startReview() { if (this.data.dueCount) wx.navigateTo({ url: "/pages/review/review" }); },
-  openReviewHistory() { wx.navigateTo({ url: "/pages/review-history/review-history?tab=history" }); },
-  openFreeReview() { wx.navigateTo({ url: "/pages/review-history/review-history?tab=free" }); },
+  openReviewHistory() { this.openReviewCenter("history"); },
+  openFreeReview() { this.openReviewCenter("free"); },
+  openReviewCenter(tab) {
+    wx.navigateTo({
+      url: `/pages/review-history/review-history?tab=${tab}`,
+      fail() { wx.showToast({ title: "页面打开失败，请重试", icon: "none" }); },
+    });
+  },
   addEntry() { wx.navigateTo({ url: "/pages/entry/entry" }); },
   openTranslate() { wx.switchTab({ url: "/pages/translate/translate" }); },
   openBooks() { wx.switchTab({ url: "/pages/books/books" }); },

@@ -1,7 +1,9 @@
 <view class="page history-page">
   <view class="mini-topbar"><view class="bar-side"><button bindtap="goBack"><image src="/assets/icons/back.svg" /></button></view><view class="bar-title">复习中心</view><view class="bar-side"></view></view>
   <view class="history-tabs"><button class="{{tab === 'history' ? 'selected' : ''}}" data-tab="history" bindtap="selectTab">复习回顾</button><button class="{{tab === 'free' ? 'selected' : ''}}" data-tab="free" bindtap="selectTab">自由复习</button></view>
-  <view wx:if="{{tab === 'history'}}" class="history-list">
+  <view wx:if="{{loading}}" class="page-state">正在加载复习内容…</view>
+  <view wx:elif="{{loadError}}" class="page-state error-state"><text>{{loadError}}</text><button bindtap="retryLoad">重新加载</button></view>
+  <view wx:elif="{{tab === 'history'}}" class="history-list">
     <view wx:for="{{logs}}" wx:key="_id" class="history-row"><view><text>{{item.entry.english}}</text><text>{{item.entry.meaning}}</text></view><text class="result {{item.rating}}">{{item.result}}</text></view>
     <view wx:if="{{!loading && !logs.length}}" class="empty">完成一次复习后，记录会出现在这里。</view>
   </view>
