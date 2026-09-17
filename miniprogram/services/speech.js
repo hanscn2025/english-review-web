@@ -1,4 +1,6 @@
 let activeAudio = null;
+const CACHE_KEY = "daywordSpeechCacheV1";
+const CACHE_LIMIT = 80;
 
 function writeAudio(path, base64) {
   return new Promise((resolve, reject) => {
@@ -13,6 +15,9 @@ function fileExists(path) {
 }
 
 async function prepare(text) {
+  const cache = wx.getStorageSync(CACHE_KEY) || {};
+  const cachedPath = cache[text];
+  if (cachedPath && await fileExists(cachedPath)) return cachedPath;
   const response = await wx.cloud.callFunction({ name: "synthesizeSpeech", data: { text } });
   const result = response.result || {};
   if (!result.ok || !result.cacheKey) throw new Error(result.message || "发音生成失败");
@@ -21,6 +26,10 @@ async function prepare(text) {
     if (!result.audioBase64) throw new Error("语音服务未返回音频");
     await writeAudio(path, result.audioBase64);
   }
+  const nextCache = { ...cache, [text]: path };
+  const keys = Object.keys(nextCache);
+  if (keys.length > CACHE_LIMIT) delete nextCache[keys[0]];
+  wx.setStorageSync(CACHE_KEY, nextCache);
   return path;
 }
 

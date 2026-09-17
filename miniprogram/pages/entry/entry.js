@@ -1,5 +1,6 @@
 const store = require("../../services/store");
 const speech = require("../../services/speech");
+const aiUsage = require("../../utils/ai-usage");
 
 Page({
   data: {
@@ -54,6 +55,10 @@ Page({
   selectType(event) { this.setData({ typeIndex: Number(event.currentTarget.dataset.index) }); },
   toggleAdvanced() { this.setData({ showAdvanced: !this.data.showAdvanced }); },
   enrichWithAI(text, includeIpa = false) {
+    const key = aiUsage.cacheKey("entry", [includeIpa ? "with-ipa" : "translation-only", text]);
+    const cached = aiUsage.getCached(key);
+    if (cached) return Promise.resolve(cached);
+    aiUsage.takeQuota();
     if (!wx.cloud.extend || !wx.cloud.extend.AI) return Promise.reject(new Error("当前微信版本不支持云开发 AI，请升级微信后重试"));
     const model = wx.cloud.extend.AI.createModel("cloudbase");
     return model.generateText({
@@ -71,7 +76,9 @@ Page({
       if (!match) throw new Error("翻译结果格式异常，请重试");
       const result = JSON.parse(match[0]);
       if (!result.translation) throw new Error("翻译服务未返回结果");
-      return { translation: String(result.translation).trim(), ipa: String(result.ipa || "").trim() };
+      const value = { translation: String(result.translation).trim(), ipa: String(result.ipa || "").trim() };
+      aiUsage.saveCached(key, value);
+      return value;
     });
   },
   translate(text) { return this.enrichWithAI(text, false).then((result) => result.translation); },

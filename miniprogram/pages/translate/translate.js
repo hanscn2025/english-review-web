@@ -1,5 +1,8 @@
 const speech = require("../../services/speech");
 const { userMessage } = require("../../utils/error");
+const aiUsage = require("../../utils/ai-usage");
+
+const MAX_TRANSLATE_LENGTH = 800;
 
 Page({
   data: {
@@ -70,21 +73,33 @@ Page({
   async translate() {
     const source = this.data.source.trim();
     if (!source || this.data.translating) return;
+    if (source.length > MAX_TRANSLATE_LENGTH) {
+      return this.setData({ error: `单次最多翻译 ${MAX_TRANSLATE_LENGTH} 个字符，请分段翻译。`, status: "" });
+    }
     this.setData({ translating: true, working: true, status: "正在翻译…", error: "" });
     try {
-      if (!wx.cloud.extend || !wx.cloud.extend.AI) throw new Error("当前微信版本不支持云开发 AI，请升级微信");
-      const model = wx.cloud.extend.AI.createModel("cloudbase");
       const sourceLanguage = this.data.languages[this.data.sourceIndex];
       const targetLanguage = this.data.languages[this.data.targetIndex];
+      const key = aiUsage.cacheKey("translation", [sourceLanguage, targetLanguage, source]);
+      const cached = aiUsage.getCached(key);
+      if (cached) {
+        this.setData({ translation: cached, status: "" });
+        return;
+      }
+      aiUsage.takeQuota();
+      if (!wx.cloud.extend || !wx.cloud.extend.AI) throw new Error("当前微信版本不支持云开发 AI，请升级微信");
+      const model = wx.cloud.extend.AI.createModel("cloudbase");
       const response = await model.generateText({ model: "hy3", temperature: 0.1, max_tokens: 480, messages: [
         { role: "system", content: `你是专业翻译引擎。${sourceLanguage === "自动检测" ? "自动识别输入语言" : `输入语言为${sourceLanguage}`}，准确、自然地翻译为${targetLanguage}。保留原文语气、段落和专有名词，只输出译文，不解释，不使用 Markdown。` },
         { role: "user", content: source },
       ] });
       const text = response && response.choices && response.choices[0] && response.choices[0].message && response.choices[0].message.content;
       if (!text) throw new Error("翻译服务没有返回结果");
-      this.setData({ translation: String(text).trim(), status: "" });
+      const translation = String(text).trim();
+      aiUsage.saveCached(key, translation);
+      this.setData({ translation, status: "" });
       const history = wx.getStorageSync("translationHistory") || [];
-      wx.setStorageSync("translationHistory", [{ source, translation: String(text).trim(), sourceLanguage, targetLanguage, createdAt: Date.now() }, ...history].slice(0, 20));
+      wx.setStorageSync("translationHistory", [{ source, translation, sourceLanguage, targetLanguage, createdAt: Date.now() }, ...history].slice(0, 20));
     } catch (error) {
       this.setData({ error: userMessage(error, "翻译失败，请重试。"), status: "" });
     } finally {
