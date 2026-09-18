@@ -2,7 +2,6 @@
   <view class="safe-top"></view>
   <view class="today-heading">
     <view><view class="eyebrow">{{todayLabel}}</view><view class="title">今天，继续一点点。</view></view>
-    <view class="streak-badge">{{streakCount}}</view>
   </view>
 
   <view class="cloud-warning" wx:if="{{cloudError}}">{{cloudError}}</view>
@@ -14,7 +13,8 @@
       <view class="review-count"><text>{{dueCount}}</text> 个待复习</view>
       <view class="muted">{{dueCount ? '大约 2 分钟完成' : '今天的内容已经处理完了'}}</view>
     </view>
-    <button class="start" bindtap="startReview" disabled="{{!dueCount}}"><image src="/assets/icons/arrow-right-blue.svg" /></button>
+    <button wx:if="{{dueCount}}" class="start" bindtap="startReview">开始复习</button>
+    <view wx:else class="review-done">今日已完成</view>
     </view>
     <view class="review-links"><button bindtap="openReviewHistory">复习回顾</button><view></view><button bindtap="openFreeReview">自由复习</button></view>
   </view>
